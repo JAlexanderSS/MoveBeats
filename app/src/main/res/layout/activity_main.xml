@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <!-- Botón sin funcionalidad -->
+    <Button
+        android:id="@+id/button_none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sin Funcionalidad" />
+
+    <!-- Botón para activar sonidos -->
+    <Button
+        android:id="@+id/button_sounds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Activar Sonidos"
+        android:layout_marginTop="20dp" />
+
+    <!-- Botón para activar control del reproductor -->
+    <Button
+        android:id="@+id/button_media_control"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Control de Reproductor"
+        android:layout_marginTop="20dp" />
+
+</LinearLayout>
