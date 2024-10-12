@@ -1,6 +1,8 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.application) // Ya aplica el plugin aquí, no necesitas la línea siguiente
     alias(libs.plugins.kotlin.android)
+    // Elimina la línea de `id("com.android.application")` para evitar el conflicto
+    id("com.google.gms.google-services") // Mantén el plugin de Google Services
 }
 
 android {
@@ -45,10 +47,21 @@ dependencies {
 
     // Dependencia directa de MediaSessionCompat
     implementation(libs.androidx.media.v160)
-    // Otras dependencias
-    implementation(libs.androidx.media.v150)
-    implementation(libs.androidx.core.ktx.v160)
-    implementation(libs.androidx.appcompat.v131)
+
+    // Dependencias Firebase
+    implementation(libs.firebase.auth.ktx)
+
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+
+    // Add the dependencies for Firebase products you want to use
+    implementation("com.google.firebase:firebase-analytics")
+
+    // Add the dependency for the Firebase Authentication library
+    implementation("com.google.firebase:firebase-auth-ktx")
+
+    // Also add the dependency for the Google Play services library and specify its version
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
 
     // Dependencias de prueba
     testImplementation(libs.junit)

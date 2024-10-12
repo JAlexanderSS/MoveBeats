@@ -20,9 +20,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
 
+    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var sensorManager: SensorManager
     private var accelerometer: Sensor? = null
     private lateinit var audioManager: AudioManager
@@ -41,6 +43,19 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Inicializar Firebase Auth para verificar si el usuario está autenticado
+        firebaseAuth = FirebaseAuth.getInstance()
+        val currentUser = firebaseAuth.currentUser
+        if (currentUser == null) {
+            // Si el usuario no ha iniciado sesión, redirigir a LoginActivity
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
+
+        // Continuar con la funcionalidad normal si el usuario está autenticado
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
@@ -155,7 +170,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     else -> {}
                 }
             } else {
-
+                // Modo sin funcionalidad activado
             }
         }
     }
