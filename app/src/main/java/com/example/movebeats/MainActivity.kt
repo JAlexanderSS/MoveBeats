@@ -15,15 +15,21 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
+import com.google.android.material.navigation.NavigationView
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
@@ -34,6 +40,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var audioManager: AudioManager
     private var mediaController: MediaController? = null
     private lateinit var mediaSessionManager: MediaSessionManager
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var navigationView: NavigationView
 
     // Sonidos
     private var mediaPlayerLeft: MediaPlayer? = null
@@ -63,16 +72,54 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
+        // Configuración del DrawerLayout y NavigationView
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navigationView = findViewById(R.id.navigation_view)
+
+        // Configurar el toggle (botón para abrir/cerrar el menú)
+        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        // Mostrar el correo electrónico del usuario en el encabezado del menú
+        val headerView = navigationView.getHeaderView(0)
+        val emailTextView = headerView.findViewById<TextView>(R.id.user_email_text_view)
+        emailTextView.text = currentUser.email
+
+        // Cerrar sesión
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_logout -> {
+                    // Cerrar sesión en Firebase
+                    firebaseAuth.signOut()
+
+                    // Cerrar sesión en Google
+                    val googleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    googleSignInClient.signOut().addOnCompleteListener {
+                        // Redirigir al LoginActivity después de cerrar sesión en Google y Firebase
+                        val intent = Intent(this, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
+
         // Mostrar el nombre del usuario
         val userNameTextView = findViewById<TextView>(R.id.user_name_text_view)
         userNameTextView.text = "Hola, ${currentUser.displayName}"
 
-        // Mostrar la foto de perfil del usuario
+        // Mostrar la foto de perfil del usuario con placeholder
         val userProfileImageView = findViewById<ImageView>(R.id.user_profile_image_view)
         val profileImageUrl: Uri? = currentUser.photoUrl
         if (profileImageUrl != null) {
             Glide.with(this)
                 .load(profileImageUrl)
+                .placeholder(R.drawable.ic_user_placeholder) // Placeholder por defecto
                 .into(userProfileImageView)
         }
 
@@ -127,6 +174,13 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         accelerometer?.also { sensor ->
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL)
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     // Método para solicitar permisos de notificación y redirigir al usuario a la configuración

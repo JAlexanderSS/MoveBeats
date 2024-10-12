@@ -1,50 +1,70 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <!-- Imagen de perfil del usuario -->
-    <ImageView
-        android:id="@+id/user_profile_image_view"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="16dp"
-        android:scaleType="centerCrop" />
+    <!-- Contenido principal de la pantalla -->
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp">
 
-    <!-- Texto con el nombre del usuario -->
-    <TextView
-        android:id="@+id/user_name_text_view"
+        <!-- Imagen de perfil del usuario -->
+        <ImageView
+            android:id="@+id/user_profile_image_view"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop" />
+
+        <!-- Texto con el nombre del usuario -->
+        <TextView
+            android:id="@+id/user_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hola, Usuario"
+            android:textSize="20sp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Botón sin funcionalidad -->
+        <Button
+            android:id="@+id/button_none"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sin Funcionalidad" />
+
+        <!-- Botón para activar sonidos -->
+        <Button
+            android:id="@+id/button_sounds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Activar Sonidos"
+            android:layout_marginTop="20dp" />
+
+        <!-- Botón para activar control del reproductor -->
+        <Button
+            android:id="@+id/button_media_control"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Control de Reproductor"
+            android:layout_marginTop="20dp" />
+
+    </LinearLayout>
+
+    <!-- Menú desplegable (NavigationView) -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hola, Usuario"
-        android:textSize="20sp"
-        android:layout_marginBottom="20dp" />
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/drawer_menu"
+        app:headerLayout="@layout/nav_header" />
 
-    <!-- Botón sin funcionalidad -->
-    <Button
-        android:id="@+id/button_none"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sin Funcionalidad" />
-
-    <!-- Botón para activar sonidos -->
-    <Button
-        android:id="@+id/button_sounds"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Activar Sonidos"
-        android:layout_marginTop="20dp" />
-
-    <!-- Botón para activar control del reproductor -->
-    <Button
-        android:id="@+id/button_media_control"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Control de Reproductor"
-        android:layout_marginTop="20dp" />
-
-</LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

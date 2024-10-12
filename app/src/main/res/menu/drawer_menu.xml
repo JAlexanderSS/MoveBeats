@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Opción para mostrar el inicio (puedes personalizarla o eliminarla si no la necesitas) -->
+    <item
+        android:id="@+id/menu_home"
+        android:title="Inicio"
+        android:icon="@drawable/ic_home" />
+
+    <!-- Opción para acceder a ajustes -->
+    <item
+        android:id="@+id/menu_settings"
+        android:title="Ajustes"
+        android:icon="@drawable/ic_settings" />
+
+    <!-- Opción para cerrar sesión -->
+    <item
+        android:id="@+id/menu_logout"
+        android:title="Cerrar sesión"
+        android:icon="@drawable/ic_logout" />
+
+</menu>
