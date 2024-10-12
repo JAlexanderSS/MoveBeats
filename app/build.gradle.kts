@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
-    id("kotlin-kapt") // Agrega el plugin kapt de manera correcta
+    id("kotlin-kapt") // Agrega el plugin kapt correctamente
 }
 
 android {
@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-    // Otras dependencias
+    // Otras dependencias de AndroidX y Material Design
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -56,15 +56,14 @@ dependencies {
 
     // Add the dependencies for Firebase products you want to use
     implementation("com.google.firebase:firebase-analytics")
-
-    // Add the dependency for the Firebase Authentication library
     implementation("com.google.firebase:firebase-auth-ktx")
 
-    // Also add the dependency for the Google Play services library and specify its version
+    // También agrega la dependencia de los servicios de Google Play para autenticación
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
     // Glide dependency
     implementation("com.github.bumptech.glide:glide:4.15.1")
+    kapt("com.github.bumptech.glide:compiler:4.15.1") // Agregar la dependencia para kapt si estás usando Glide con anotaciones
 
     // Dependencias de prueba
     testImplementation(libs.junit)

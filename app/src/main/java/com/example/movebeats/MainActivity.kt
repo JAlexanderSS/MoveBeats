@@ -100,8 +100,15 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     googleSignInClient.signOut().addOnCompleteListener {
                         // Redirigir al LoginActivity después de cerrar sesión en Google y Firebase
                         val intent = Intent(this, LoginActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
                         finish()
+                    }
+
+                    // Eliminar cuenta conectada para forzar la selección de una nueva cuenta
+                    googleSignInClient.revokeAccess().addOnCompleteListener {
+                        // Opcionalmente, muestra un mensaje si se revoca el acceso correctamente
+                        Toast.makeText(this, "Acceso revocado", Toast.LENGTH_SHORT).show()
                     }
                     true
                 }
@@ -119,6 +126,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         if (profileImageUrl != null) {
             Glide.with(this)
                 .load(profileImageUrl)
+                .circleCrop() // Hace que la imagen sea circular
                 .placeholder(R.drawable.ic_user_placeholder) // Placeholder por defecto
                 .into(userProfileImageView)
         }
@@ -221,8 +229,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             // Umbrales de detección de movimiento
             val thresholdUp = 9.0f
             val thresholdDown = -2.0f
-            val thresholdLeft = 3.5f
-            val thresholdRight = -3.5f
+            val thresholdLeft = 5.0f
+            val thresholdRight = -5.0f
 
             if (isSoundActive) {
                 when {
