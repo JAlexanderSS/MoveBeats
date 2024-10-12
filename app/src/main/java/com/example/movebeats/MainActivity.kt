@@ -11,16 +11,19 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.session.MediaController
 import android.media.session.MediaSessionManager
+import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
@@ -63,6 +66,15 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         // Mostrar el nombre del usuario
         val userNameTextView = findViewById<TextView>(R.id.user_name_text_view)
         userNameTextView.text = "Hola, ${currentUser.displayName}"
+
+        // Mostrar la foto de perfil del usuario
+        val userProfileImageView = findViewById<ImageView>(R.id.user_profile_image_view)
+        val profileImageUrl: Uri? = currentUser.photoUrl
+        if (profileImageUrl != null) {
+            Glide.with(this)
+                .load(profileImageUrl)
+                .into(userProfileImageView)
+        }
 
         // Configuración para ajuste de barras de sistema en la vista
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

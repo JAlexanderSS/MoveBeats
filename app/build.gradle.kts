@@ -1,8 +1,8 @@
 plugins {
-    alias(libs.plugins.android.application) // Ya aplica el plugin aquí, no necesitas la línea siguiente
-    alias(libs.plugins.kotlin.android)
-    // Elimina la línea de `id("com.android.application")` para evitar el conflicto
-    id("com.google.gms.google-services") // Mantén el plugin de Google Services
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
+    id("kotlin-kapt") // Agrega el plugin kapt de manera correcta
 }
 
 android {
@@ -62,6 +62,9 @@ dependencies {
 
     // Also add the dependency for the Google Play services library and specify its version
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+    // Glide dependency
+    implementation("com.github.bumptech.glide:glide:4.15.1")
 
     // Dependencias de prueba
     testImplementation(libs.junit)
