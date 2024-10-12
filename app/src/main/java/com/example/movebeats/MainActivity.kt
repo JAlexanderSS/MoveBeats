@@ -15,6 +15,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -58,6 +59,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         // Continuar con la funcionalidad normal si el usuario está autenticado
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        // Mostrar el nombre del usuario
+        val userNameTextView = findViewById<TextView>(R.id.user_name_text_view)
+        userNameTextView.text = "Hola, ${currentUser.displayName}"
 
         // Configuración para ajuste de barras de sistema en la vista
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -6,6 +5,15 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="16dp">
+
+    <!-- TextView para mostrar el nombre del usuario -->
+    <TextView
+        android:id="@+id/user_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Hola, Usuario"
+        android:layout_marginBottom="20dp"/>
 
     <!-- Botón sin funcionalidad -->
     <Button
